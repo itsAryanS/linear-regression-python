@@ -1,0 +1,26 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# generate random data
+np.random.seed(0)
+x = np.random.rand(100, 1)
+y = 2 + 3 * x + np.random.rand(100, 1)
+
+# add a column of ones to x to represent the bias
+x = np.c_[np.ones((100, 1)), x]
+
+# calculate the weights using the normal equation
+weights = np.linalg.inv(x.T.dot(x)).dot(x.T).dot(y)
+
+# make predictions for x values
+x_new = np.array([[0], [1]])
+x_new = np.c_[np.ones((2, 1)), x_new]
+y_pred = x_new.dot(weights)
+
+# plot the data and the regression line
+plt.plot(x[:, 1], y, "b.")
+plt.plot(x_new[:, 1], y_pred, "r-")
+plt.xlabel("$x_1$", fontsize=18)
+plt.ylabel("$y$", rotation=0, fontsize=18)
+plt.axis([0, 1, 0, 10])
+plt.show()
